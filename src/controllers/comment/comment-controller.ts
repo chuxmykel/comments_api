@@ -32,8 +32,7 @@ export class CommentController {
         replyToId,
         text,
       );
-      // console.log(source)
-      // console.log(comment.source) // All properties are undefined
+
       return {
         headers: {
           "Content-Type": "application/json",
