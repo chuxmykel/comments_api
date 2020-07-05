@@ -114,15 +114,3 @@ export interface IHTTPResponse {
 export interface IControllerMethod {
   (httpRequest: IHTTPRequest): Promise<any>;
 }
-
-export interface ICommentDetails {
-  author: string;
-  source: ISource;
-  postId: string;
-  text: string;
-  replyToId?: string;
-  id?: string;
-  published?: boolean;
-  createdOn?: Date;
-  modifiedOn?: Date;
-}
