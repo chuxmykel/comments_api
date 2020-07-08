@@ -29,16 +29,15 @@ export class CommentService implements ICommentService {
       replyToId,
     );
 
-    const existingComment: IComment | null = await this.commentsRepository.findByHash(
+    const exists: IComment | null = await this.commentsRepository.findByHash(
       comment.hash,
     );
 
-    if (existingComment) {
-      return existingComment;
+    if (exists) {
+      return exists;
     }
 
-    const moderatedComment: IComment = await this.handleModeration(comment);
-    const insertedComment: IComment = this.commentsRepository.insert(moderatedComment);
-    return insertedComment;
+    const moderated = await this.handleModeration(comment);
+    return this.commentsRepository.insert(moderated);
   }
 }
