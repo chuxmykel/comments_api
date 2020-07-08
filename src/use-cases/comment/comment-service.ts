@@ -38,7 +38,7 @@ export class CommentService implements ICommentService {
     }
 
     const moderatedComment: IComment = await this.handleModeration(comment);
-    const insertedComment: IComment = this.commentsRepository.insert(moderatedComment);
+    const insertedComment: IComment = await this.commentsRepository.insert(moderatedComment);
     return insertedComment;
   }
 }
