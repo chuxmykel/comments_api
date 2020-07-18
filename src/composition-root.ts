@@ -33,7 +33,6 @@ const commentsRepository = new CommentsRepository(
 
 const commentService = new CommentService(
   commentFactory,
-  sourceFactory,
   commentsRepository,
   handleModeration,
 );

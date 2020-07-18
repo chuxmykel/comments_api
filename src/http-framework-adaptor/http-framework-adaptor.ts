@@ -15,7 +15,7 @@ export class HTTPFrameworkControllerAdaptor {
         body: requestBody.value,
         query: "query",
         params: "params",
-        ip: "10.200.155.1",
+        ip: request.ip,
         method: request.method,
         path: request.url.pathname,
         headers: {
