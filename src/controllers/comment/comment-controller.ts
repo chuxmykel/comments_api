@@ -1,10 +1,28 @@
-import {
-  ICommentService,
-  IHTTPRequest,
-  IHTTPResponse,
-} from "../../interfaces/interfaces.ts";
-
+import { ICommentService } from '../../use-cases/comment/comment-service.ts'
 import { Comment } from '../../entities/index.ts';
+
+export interface IHTTPRequest {
+  body: any;
+  query: any;
+  params: any;
+  ip: string;
+  method: string;
+  path: any;
+  headers: {
+    "Content-Type": string;
+    Referrer: string;
+    "User-Agent": string;
+  };
+}
+
+export interface IHTTPResponse {
+  statusCode: number;
+  body: any;
+  headers: {
+    "Content-Type": string;
+    "Last-Modified"?: string;
+  };
+}
 
 export class CommentController {
   constructor(private commentService: ICommentService) {

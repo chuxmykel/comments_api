@@ -1,12 +1,25 @@
+import { Comment, ISourceFactory } from "../index.ts";
 import {
   IId,
   ISanitize,
   IMd5,
-  ISourceFactory,
-  ICommentFactory,
-} from "../../interfaces/interfaces.ts";
+} from "../../utils/utils.ts";
 
-import { Comment, Source } from "../index.ts";
+export interface ICommentFactory {
+  makeComment(
+    author: string,
+    ip: string,
+    browser: string,
+    referrer: string,
+    postId: string,
+    text: string,
+    id?: string,
+    replyToId?: string,
+    published?: boolean,
+    createdOn?: Date,
+    modifiedOn?: Date,
+  ): Comment;
+}
 
 export class CommentFactory implements ICommentFactory {
   constructor(

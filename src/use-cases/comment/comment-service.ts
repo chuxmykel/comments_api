@@ -1,12 +1,18 @@
-import {
-  ICommentFactory,
-  ISourceFactory,
-  ICommentService,
-  ICommentsRepository,
-  IHandleModeration,
-} from "../../interfaces/interfaces.ts";
+import { Comment, ICommentFactory } from "../../entities/index.ts";
+import { ICommentsRepository } from '../../data-access/comments/comments-repository.ts'
+import { IHandleModeration } from "../../utils/utils.ts";
 
-import { Comment } from '../../entities/index.ts';
+export interface ICommentService {
+  addComment(
+    author: string,
+    ip: string,
+    browser: string,
+    referrer: string,
+    postId: string,
+    replyToId: string | undefined,
+    text: string,
+  ): Promise<Comment>;
+}
 
 export class CommentService implements ICommentService {
   constructor(
@@ -34,16 +40,19 @@ export class CommentService implements ICommentService {
       replyToId,
     );
 
-    const existingComment: Comment | null = await this.commentsRepository.findByHash(
-      comment.hash,
-    );
+    const existingComment: Comment | null = await this.commentsRepository
+      .findByHash(
+        comment.hash,
+      );
 
     if (existingComment) {
       return existingComment;
     }
 
     const moderatedComment: Comment = await this.handleModeration(comment);
-    const insertedComment: Comment = await this.commentsRepository.insert(moderatedComment);
+    const insertedComment: Comment = await this.commentsRepository.insert(
+      moderatedComment,
+    );
     return insertedComment;
   }
 }

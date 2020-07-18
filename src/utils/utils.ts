@@ -1,13 +1,26 @@
 import { v4 } from "https://deno.land/std@0.58.0/uuid/mod.ts";
 import { createHash } from "https://deno.land/std@0.58.0/hash/mod.ts";
 
-import {
-  IId,
-  IMd5,
-  ISanitize,
-  IIsValidIp,
-  IHandleModeration,
-} from "../interfaces/interfaces.ts";
+export interface ISanitize {
+  (text: string): string;
+}
+
+export interface IId {
+  isValidId(id: string): boolean;
+  makeId(): string;
+}
+
+export interface IMd5 {
+  (text: string): string;
+}
+
+export interface IIsValidIp {
+  (ip: string): boolean;
+}
+
+export interface IHandleModeration {
+  (comment: Comment): Promise<Comment>;
+}
 
 import { Comment } from '../entities/index.ts';
 

@@ -1,11 +1,10 @@
+import { Source } from "../source/source.ts";
+import { ISourceFactory } from "../source/source-factory.ts";
 import {
   ISanitize,
   IMd5,
-  ISourceFactory,
   IId,
-} from "../../interfaces/interfaces.ts";
-
-import { Source } from '../source/source.ts';
+} from "../../utils/utils.ts";
 
 export class Comment {
   private _sanitizedText: string;

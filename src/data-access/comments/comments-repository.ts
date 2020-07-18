@@ -1,11 +1,13 @@
 import {
-  ICommentsRepository,
-  IDataBaseFactory,
+  Comment,
   ICommentFactory,
-  ISourceFactory,
-} from "../../interfaces/interfaces.ts";
+} from "../../entities/index.ts";
+import { IDataBaseFactory } from "../../../db/index.ts";
 
-import { Comment } from '../../entities/index.ts';
+export interface ICommentsRepository {
+  findByHash(hash: string): Promise<Comment | null>;
+  insert(commentDetails: Comment): Promise<Comment>;
+}
 
 export class CommentsRepository implements ICommentsRepository {
   constructor(
@@ -30,7 +32,8 @@ export class CommentsRepository implements ICommentsRepository {
       commentDetails[column.name] = comments.rows[0][index];
     });
 
-    const source: { ip: string, browser: string, referrer: string } = JSON.parse(commentDetails.source);
+    const source: { ip: string; browser: string; referrer: string } = JSON
+      .parse(commentDetails.source);
 
     const foundComment: Comment = this._commentFactory.makeComment(
       commentDetails.author,

@@ -1,20 +1,30 @@
-import {
-  IControllerMethod,
-  IHTTPRequest,
-  IHTTPResponse,
-} from "../interfaces/interfaces.ts";
+import { IHTTPRequest, IHTTPResponse } from '../controllers/comment/comment-controller.ts'
+
+export interface IControllerMethod {
+  (httpRequest: IHTTPRequest): Promise<any>;
+}
 
 export class HTTPFrameworkControllerAdaptor {
+  private _getQueryParams(searchParams: URLSearchParams): { [key: string]: string } {
+    const params: { [key: string]: string } = {};
+    for (const [key, value] of searchParams) {
+      params[key] = value;
+    }
+    return params;
+  }
+
   public makeOakCallback(
     controller: IControllerMethod,
   ): (context: any) => any {
     return async (context) => {
-      const { request, response } = context;
+      const { request, response, params } = context;
       const requestBody = await request.body();
       const httpRequest: IHTTPRequest = {
         body: requestBody.value,
-        query: "query",
-        params: "params",
+        query: this._getQueryParams(
+          request.url.searchParams,
+        ),
+        params,
         ip: request.ip,
         method: request.method,
         path: request.url.pathname,

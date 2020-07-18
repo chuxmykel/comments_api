@@ -1,4 +1,4 @@
-import { IIsValidIp } from "../../interfaces/interfaces.ts";
+import { IIsValidIp } from "../../utils/utils.ts";
 
 export class Source {
   constructor(
