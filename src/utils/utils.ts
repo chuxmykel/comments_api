@@ -1,5 +1,4 @@
-import { v4 } from "https://deno.land/std@0.58.0/uuid/mod.ts";
-import { createHash } from "https://deno.land/std@0.58.0/hash/mod.ts";
+import { v4, createHash } from "../../deps.ts";
 
 export interface ISanitize {
   (text: string): string;

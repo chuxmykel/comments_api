@@ -1,4 +1,4 @@
-import { Client } from "https://deno.land/x/postgres@v0.4.2/mod.ts";
+import { Client } from '../deps.ts'; 
 import { DATABASE_URL } from "../config.ts";
 
 export interface IDataBaseFactory {

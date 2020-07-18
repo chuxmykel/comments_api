@@ -1,7 +1,7 @@
 import { IHTTPRequest, IHTTPResponse } from '../controllers/comment/comment-controller.ts'
 
 export interface IControllerMethod {
-  (httpRequest: IHTTPRequest): Promise<any>;
+  (httpRequest: IHTTPRequest): Promise<IHTTPResponse>;
 }
 
 export class HTTPFrameworkControllerAdaptor {
