@@ -1,5 +1,5 @@
-import { Comment, ICommentFactory } from "../../entities/index.ts";
-import { ICommentsRepository } from '../../data-access/comments/comments-repository.ts'
+import { Comment, ICommentFactory } from "../../entities/mod.ts";
+import { ICommentsRepository } from "../../data-access/comments/comments-repository.ts";
 import { IHandleModeration } from "../../utils/utils.ts";
 
 export interface ICommentService {

@@ -21,7 +21,7 @@ export interface IHandleModeration {
   (comment: Comment): Promise<Comment>;
 }
 
-import { Comment } from '../entities/index.ts';
+import { Comment } from "../entities/mod.ts";
 
 export const Id: IId = {
   isValidId: (id: string) => v4.validate(id),

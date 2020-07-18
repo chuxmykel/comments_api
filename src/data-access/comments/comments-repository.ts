@@ -1,8 +1,8 @@
 import {
   Comment,
   ICommentFactory,
-} from "../../entities/index.ts";
-import { IDataBaseFactory } from "../../../db/index.ts";
+} from "../../entities/mod.ts";
+import { IDataBaseFactory } from "../../../db/mod.ts";
 
 export interface ICommentsRepository {
   findByHash(hash: string): Promise<Comment | null>;

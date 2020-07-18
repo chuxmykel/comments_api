@@ -1,4 +1,4 @@
-import { Comment, ISourceFactory } from "../index.ts";
+import { Comment, ISourceFactory } from "../mod.ts";
 import {
   IId,
   ISanitize,

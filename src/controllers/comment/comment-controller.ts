@@ -1,5 +1,5 @@
-import { ICommentService } from '../../use-cases/comment/comment-service.ts'
-import { Comment } from '../../entities/index.ts';
+import { ICommentService } from "../../use-cases/comment/comment-service.ts";
+import { Comment } from "../../entities/mod.ts";
 
 export interface IHTTPRequest {
   body: any;
