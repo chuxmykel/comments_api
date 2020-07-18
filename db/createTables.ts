@@ -1,4 +1,4 @@
-import { DataBaseFactory } from './index.ts';
+import { DataBaseFactory } from "./mod.ts";
 
 const dataBaseFactory = new DataBaseFactory();
 const dbClient = await dataBaseFactory.makeDataBase();
@@ -19,11 +19,11 @@ const createTableQueries = `
 `;
 
 export const createTables = async () => {
-  console.log('creating tables');
+  console.log("creating tables");
   try {
     await dbClient.query(createTableQueries);
 
-    console.log('Tables Created Successfully!!!')
+    console.log("Tables Created Successfully!!!");
   } catch (e) {
     console.log(e);
   }

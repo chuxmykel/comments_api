@@ -1,21 +1,22 @@
+import { Source } from "../source/source.ts";
+import { ISourceFactory } from "../source/source-factory.ts";
 import {
   ISanitize,
   IMd5,
-  ISourceFactory,
-  ISource,
   IId,
-  IComment,
-} from "../../interfaces/interfaces.ts";
+} from "../../utils/utils.ts";
 
-export default class Comment implements IComment {
+export class Comment {
   private _sanitizedText: string;
   private _deletedText: string = ".xX This comment has been deleted Xx.";
-  private _validSource: ISource;
+  private _validSource: Source;
   constructor(
     private _id: string,
     private _author: string,
     private _createdOn: Date = new Date(Date.now()),
-    private _source: ISource,
+    ip: string,
+    browser: string,
+    referrer: string,
     private _modifiedOn: Date = new Date(Date.now()),
     private _postId: string,
     private _published: boolean = false,
@@ -53,9 +54,9 @@ export default class Comment implements IComment {
     }
 
     this._validSource = this.sourceFactory.makeSource(
-      this._source.ip,
-      this._source.browser,
-      this._source.referrer,
+      ip,
+      browser,
+      referrer,
     );
   }
 
@@ -94,7 +95,7 @@ export default class Comment implements IComment {
     return this._replyToId;
   }
 
-  get source(): ISource {
+  get source(): Source {
     return this._validSource;
   }
 

@@ -1,11 +1,18 @@
-import {
-  ICommentFactory,
-  ISource,
-  IComment,
-  ICommentsRepository,
-  IHandleModeration,
-  ICommentService,
-} from "../../interfaces/interfaces.ts";
+import { Comment, ICommentFactory } from "../../entities/mod.ts";
+import { ICommentsRepository } from "../../data-access/comments/comments-repository.ts";
+import { IHandleModeration } from "../../utils/utils.ts";
+
+export interface ICommentService {
+  addComment(
+    author: string,
+    ip: string,
+    browser: string,
+    referrer: string,
+    postId: string,
+    replyToId: string | undefined,
+    text: string,
+  ): Promise<Comment>;
+}
 
 export class CommentService implements ICommentService {
   constructor(
@@ -16,29 +23,36 @@ export class CommentService implements ICommentService {
 
   public async addComment(
     author: string,
-    source: ISource,
+    ip: string,
+    browser: string,
+    referrer: string,
     postId: string,
     replyToId: string | undefined = undefined,
     text: string,
-  ): Promise<IComment> {
+  ): Promise<Comment> {
     const comment = this.commentFactory.makeComment(
       author,
-      source,
+      ip,
+      browser,
+      referrer,
       postId,
       text,
       replyToId,
     );
 
-    const existingComment: IComment | null = await this.commentsRepository.findByHash(
-      comment.hash,
-    );
+    const existingComment: Comment | null = await this.commentsRepository
+      .findByHash(
+        comment.hash,
+      );
 
     if (existingComment) {
       return existingComment;
     }
 
-    const moderatedComment: IComment = await this.handleModeration(comment);
-    const insertedComment: IComment = await this.commentsRepository.insert(moderatedComment);
+    const moderatedComment: Comment = await this.handleModeration(comment);
+    const insertedComment: Comment = await this.commentsRepository.insert(
+      moderatedComment,
+    );
     return insertedComment;
   }
 }

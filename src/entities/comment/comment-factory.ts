@@ -1,13 +1,25 @@
+import { Comment, ISourceFactory } from "../mod.ts";
 import {
   IId,
   ISanitize,
   IMd5,
-  ISourceFactory,
-  ICommentFactory,
-  ISource,
-} from "../../interfaces/interfaces.ts";
+} from "../../utils/utils.ts";
 
-import Comment from "./comment.ts";
+export interface ICommentFactory {
+  makeComment(
+    author: string,
+    ip: string,
+    browser: string,
+    referrer: string,
+    postId: string,
+    text: string,
+    id?: string,
+    replyToId?: string,
+    published?: boolean,
+    createdOn?: Date,
+    modifiedOn?: Date,
+  ): Comment;
+}
 
 export class CommentFactory implements ICommentFactory {
   constructor(
@@ -19,7 +31,9 @@ export class CommentFactory implements ICommentFactory {
 
   public makeComment(
     author: string,
-    source: ISource,
+    ip: string,
+    browser: string,
+    referrer: string,
     postId: string,
     text: string,
     replyToId?: string,
@@ -32,7 +46,9 @@ export class CommentFactory implements ICommentFactory {
       id || this.Id.makeId(),
       author,
       createdOn,
-      source,
+      ip,
+      browser,
+      referrer,
       modifiedOn,
       postId,
       published,

@@ -1,14 +1,27 @@
-import { v4 } from "https://deno.land/std@0.58.0/uuid/mod.ts";
-import { createHash } from "https://deno.land/std@0.58.0/hash/mod.ts";
+import { Comment } from "../entities/mod.ts";
+import { v4, createHash } from "../../deps.ts";
 
-import {
-  IId,
-  IMd5,
-  ISanitize,
-  IIsValidIp,
-  IHandleModeration,
-  IComment,
-} from "../interfaces/interfaces.ts";
+export interface ISanitize {
+  (text: string): string;
+}
+
+export interface IId {
+  isValidId(id: string): boolean;
+  makeId(): string;
+}
+
+export interface IMd5 {
+  (text: string): string;
+}
+
+export interface IIsValidIp {
+  (ip: string): boolean;
+}
+
+export interface IHandleModeration {
+  (comment: Comment): Promise<Comment>;
+}
+
 
 export const Id: IId = {
   isValidId: (id: string) => v4.validate(id),
@@ -27,8 +40,8 @@ export const isValidIp: IIsValidIp = (ip: string): boolean =>
   typeof ip === "string";
 
 export const handleModeration: IHandleModeration = async (
-  comment: IComment,
-): Promise<IComment> => {
+  comment: Comment,
+): Promise<Comment> => {
   comment.unPublish();
   return comment;
 };

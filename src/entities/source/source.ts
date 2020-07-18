@@ -1,6 +1,6 @@
-import { IIsValidIp } from "../../interfaces/interfaces.ts";
+import { IIsValidIp } from "../../utils/utils.ts";
 
-export default class Source {
+export class Source {
   constructor(
     private _ip: string,
     private _browser: string,

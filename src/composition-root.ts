@@ -9,10 +9,9 @@ import {
 import { HTTPFrameworkControllerAdaptor } from "./http-framework-adaptor/http-framework-adaptor.ts";
 import { CommentController } from "./controllers/comment/comment-controller.ts";
 import { CommentService } from "./use-cases/comment/comment-service.ts";
-import { CommentFactory } from "./entities/comment/comment-factory.ts";
+import { CommentFactory, SourceFactory } from "./entities/mod.ts";
 import { CommentsRepository } from "./data-access/comments/comments-repository.ts";
-import { SourceFactory } from "./entities/source/source-factory.ts";
-import { DataBaseFactory } from "../db/index.ts";
+import { DataBaseFactory } from "../db/mod.ts";
 
 const httpFrameworkControllerAdaptor = new HTTPFrameworkControllerAdaptor();
 
@@ -29,7 +28,6 @@ const dataBaseFactory = new DataBaseFactory();
 
 const commentsRepository = new CommentsRepository(
   commentFactory,
-  sourceFactory,
   dataBaseFactory,
 );
 

@@ -1,10 +1,28 @@
-import {
-  ICommentService,
-  IHTTPRequest,
-  ISource,
-  IHTTPResponse,
-  IComment,
-} from "../../interfaces/interfaces.ts";
+import { ICommentService } from "../../use-cases/comment/comment-service.ts";
+import { Comment } from "../../entities/mod.ts";
+
+export interface IHTTPRequest {
+  body: any;
+  query: any;
+  params: any;
+  ip: string;
+  method: string;
+  path: any;
+  headers: {
+    "Content-Type": string;
+    Referrer: string;
+    "User-Agent": string;
+  };
+}
+
+export interface IHTTPResponse {
+  statusCode: number;
+  body: any;
+  headers: {
+    "Content-Type": string;
+    "Last-Modified"?: string;
+  };
+}
 
 export class CommentController {
   constructor(private commentService: ICommentService) {
@@ -19,15 +37,11 @@ export class CommentController {
         text,
       } = httpRequest.body;
 
-      const source: ISource = {
-        ip: httpRequest.ip,
-        browser: httpRequest.headers["User-Agent"],
-        referrer: httpRequest.headers["Referer"],
-      };
-
-      const comment: IComment = await this.commentService.addComment(
+      const comment: Comment = await this.commentService.addComment(
         author,
-        source,
+        httpRequest.ip, // ip
+        httpRequest.headers["User-Agent"], // browser
+        httpRequest.headers["Referrer"], // referrer
         postId,
         replyToId,
         text,

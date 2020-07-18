@@ -1,4 +1,4 @@
-import { Application } from "https://deno.land/x/oak@v5.3.1/mod.ts";
+import { Application } from "../deps.ts";
 
 import { PORT } from "../config.ts";
 import router from "./routes/routes.ts";

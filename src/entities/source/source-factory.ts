@@ -1,9 +1,13 @@
-import {
-  IIsValidIp,
-  ISourceFactory,
-} from "../../interfaces/interfaces.ts";
+import { Source } from "./source.ts";
+import { IIsValidIp } from "../../utils/utils.ts";
 
-import Source from "./source.ts";
+export interface ISourceFactory {
+  makeSource(
+    ip: string,
+    browser: string,
+    referrer: string | undefined,
+  ): Source;
+}
 
 export class SourceFactory implements ISourceFactory {
   constructor(private isValidIp: IIsValidIp) {}
