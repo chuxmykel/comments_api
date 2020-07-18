@@ -1,3 +1,4 @@
+import { Comment } from "../entities/mod.ts";
 import { v4, createHash } from "../../deps.ts";
 
 export interface ISanitize {
@@ -21,7 +22,6 @@ export interface IHandleModeration {
   (comment: Comment): Promise<Comment>;
 }
 
-import { Comment } from "../entities/mod.ts";
 
 export const Id: IId = {
   isValidId: (id: string) => v4.validate(id),
