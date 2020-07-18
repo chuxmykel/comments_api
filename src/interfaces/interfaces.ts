@@ -1,3 +1,5 @@
+import { Comment, Source } from "../entities/index.ts";
+
 export interface ISanitize {
   (text: string): string;
 }
@@ -11,31 +13,8 @@ export interface IMd5 {
   (text: string): string;
 }
 
-export interface IComment {
-  id: string;
-  author: string;
-  createdOn: Date;
-  hash: string;
-  modifiedOn: Date;
-  postId: string;
-  replyToId: string | undefined;
-  source: ISource;
-  text: string;
-  isPublished: boolean;
-  isDeleted: boolean;
-  markDeleted(): void;
-  publish(): void;
-  unPublish(): void;
-}
-
 export interface IIsValidIp {
   (ip: string): boolean;
-}
-
-export interface ISource {
-  ip: string;
-  browser: string;
-  referrer: string | undefined;
 }
 
 export interface ISourceFactory {
@@ -43,13 +22,15 @@ export interface ISourceFactory {
     ip: string,
     browser: string,
     referrer: string | undefined,
-  ): ISource;
+  ): Source;
 }
 
 export interface ICommentFactory {
   makeComment(
     author: string,
-    source: ISource,
+    ip: string,
+    browser: string,
+    referrer: string,
     postId: string,
     text: string,
     id?: string,
@@ -57,16 +38,16 @@ export interface ICommentFactory {
     published?: boolean,
     createdOn?: Date,
     modifiedOn?: Date,
-  ): IComment;
+  ): Comment;
 }
 
 export interface ICommentsRepository {
-  findByHash(hash: string): Promise<IComment | null>;
-  insert(commentDetails: IComment): Promise<IComment>;
+  findByHash(hash: string): Promise<Comment | null>;
+  insert(commentDetails: Comment): Promise<Comment>;
 }
 
 export interface IHandleModeration {
-  (comment: IComment): Promise<IComment>;
+  (comment: Comment): Promise<Comment>;
 }
 
 export interface IDataBaseFactory {
@@ -76,11 +57,13 @@ export interface IDataBaseFactory {
 export interface ICommentService {
   addComment(
     author: string,
-    source: ISource,
+    ip: string,
+    browser: string,
+    referrer: string,
     postId: string,
     replyToId: string | undefined,
     text: string,
-  ): Promise<IComment>;
+  ): Promise<Comment>;
 }
 
 export type KeyValue<T, U> = {
@@ -97,7 +80,7 @@ export interface IHTTPRequest {
   path: any;
   headers: {
     "Content-Type": string;
-    Referer: string | undefined;
+    Referrer: string;
     "User-Agent": string;
   };
 }

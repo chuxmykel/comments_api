@@ -20,15 +20,21 @@ export class HTTPFrameworkControllerAdaptor {
         path: request.url.pathname,
         headers: {
           "Content-Type": request.headers.get("Content-Type"),
-          Referer: request.headers.get("referer"),
+          Referrer: request.headers.get("referer"),
           "User-Agent": request.headers.get("User-Agent"),
         },
       };
 
       try {
         const httpResponse: IHTTPResponse = await controller(httpRequest);
-        response.headers.set("Content-Type", httpResponse.headers["Content-Type"]);
-        response.headers.set("Last-Modified", httpResponse.headers["Last-Modified"]);
+        response.headers.set(
+          "Content-Type",
+          httpResponse.headers["Content-Type"],
+        );
+        response.headers.set(
+          "Last-Modified",
+          httpResponse.headers["Last-Modified"],
+        );
         response.status = httpResponse.statusCode;
         response.body = httpResponse.body;
       } catch (error) {

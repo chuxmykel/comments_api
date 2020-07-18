@@ -1,10 +1,10 @@
 import {
   ICommentService,
   IHTTPRequest,
-  ISource,
   IHTTPResponse,
-  IComment,
 } from "../../interfaces/interfaces.ts";
+
+import { Comment } from '../../entities/index.ts';
 
 export class CommentController {
   constructor(private commentService: ICommentService) {
@@ -19,15 +19,11 @@ export class CommentController {
         text,
       } = httpRequest.body;
 
-      const source: ISource = {
-        ip: httpRequest.ip,
-        browser: httpRequest.headers["User-Agent"],
-        referrer: httpRequest.headers["Referer"],
-      };
-
-      const comment: IComment = await this.commentService.addComment(
+      const comment: Comment = await this.commentService.addComment(
         author,
-        source,
+        httpRequest.ip, // ip
+        httpRequest.headers["User-Agent"], // browser
+        httpRequest.headers["Referrer"], // referrer
         postId,
         replyToId,
         text,

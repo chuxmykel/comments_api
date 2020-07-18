@@ -1,20 +1,19 @@
 import {
-  IComment,
   ICommentsRepository,
   IDataBaseFactory,
   ICommentFactory,
   ISourceFactory,
-  ISource,
 } from "../../interfaces/interfaces.ts";
+
+import { Comment } from '../../entities/index.ts';
 
 export class CommentsRepository implements ICommentsRepository {
   constructor(
     private _commentFactory: ICommentFactory,
-    private _sourceFactory: ISourceFactory,
     private _dataBaseFactory: IDataBaseFactory,
   ) {}
 
-  public async findByHash(hash: string): Promise<IComment | null> {
+  public async findByHash(hash: string): Promise<Comment | null> {
     const dataBase = await this._dataBaseFactory.makeDataBase();
     const comments = await dataBase.query(
       `SELECT * FROM "Comments" WHERE hash = $1`,
@@ -31,15 +30,13 @@ export class CommentsRepository implements ICommentsRepository {
       commentDetails[column.name] = comments.rows[0][index];
     });
 
-    const source: ISource = this._sourceFactory.makeSource(
-      JSON.parse(commentDetails.source)._ip,
-      JSON.parse(commentDetails.source)._browser,
-      JSON.parse(commentDetails.source)._referrer,
-    );
+    const source: { ip: string, browser: string, referrer: string } = JSON.parse(commentDetails.source);
 
-    const foundComment: IComment = this._commentFactory.makeComment(
+    const foundComment: Comment = this._commentFactory.makeComment(
       commentDetails.author,
-      source,
+      source.ip,
+      source.browser,
+      source.referrer,
       commentDetails.postId,
       commentDetails.text,
       commentDetails.replyToId,
@@ -52,7 +49,7 @@ export class CommentsRepository implements ICommentsRepository {
     return foundComment;
   }
 
-  public async insert(commentDetails: IComment): Promise<IComment> {
+  public async insert(commentDetails: Comment): Promise<Comment> {
     const {
       id,
       author,
@@ -74,7 +71,11 @@ export class CommentsRepository implements ICommentsRepository {
       id,
       author,
       createdOn,
-      JSON.stringify(source),
+      JSON.stringify({
+        ip: source.ip,
+        browser: source.browser,
+        referrer: source.referrer,
+      }),
       modifiedOn,
       postId,
       isPublished,

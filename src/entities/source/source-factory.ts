@@ -3,7 +3,7 @@ import {
   ISourceFactory,
 } from "../../interfaces/interfaces.ts";
 
-import Source from "./source.ts";
+import { Source } from "./source.ts";
 
 export class SourceFactory implements ISourceFactory {
   constructor(private isValidIp: IIsValidIp) {}

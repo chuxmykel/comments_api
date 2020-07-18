@@ -7,8 +7,9 @@ import {
   ISanitize,
   IIsValidIp,
   IHandleModeration,
-  IComment,
 } from "../interfaces/interfaces.ts";
+
+import { Comment } from '../entities/index.ts';
 
 export const Id: IId = {
   isValidId: (id: string) => v4.validate(id),
@@ -27,8 +28,8 @@ export const isValidIp: IIsValidIp = (ip: string): boolean =>
   typeof ip === "string";
 
 export const handleModeration: IHandleModeration = async (
-  comment: IComment,
-): Promise<IComment> => {
+  comment: Comment,
+): Promise<Comment> => {
   comment.unPublish();
   return comment;
 };
