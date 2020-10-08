@@ -1,3 +1,5 @@
+# Comments API
+
 ![comments api logo](https://i.ibb.co/4t0DVKw/comments-api.png")
 
 This is a simple API to handle comments on any platform. 💬💭
@@ -24,7 +26,7 @@ Maintainability has been an issue for me lately and I am trying to understand ho
 
     - Request Body:
 
-      ```
+      ```json
       {
         "author": "Ngwobia Chukwudi",
         "postId": "6e9bdc72-cb54-4eae-918b-9c1a31c2b14f",
@@ -35,7 +37,8 @@ Maintainability has been an issue for me lately and I am trying to understand ho
       ```
 
     - Response Body:
-      ```
+
+      ```json
       {
           "status": 201,
           "data": {
