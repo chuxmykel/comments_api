@@ -14,7 +14,8 @@ Maintainability has been an issue for me lately and I am trying to understand ho
 
 - [deno](https://deno.land/) - A secure runtime for JavaScript and TypeScript.
 - [oak](https://deno.land/x/oak) - A middleware framework for Deno's http server, including a router middleware.
-- [deno-postgres](https://deno.land/x/postgres) - A PostgreSQL driver for Deno.
+- [deno-postgres](https://deno.land/x/postgres) - A PostgreSQL driver for Deno
+- [docker](https://www.docker.com/)
 
 ## Features ✨
 
@@ -76,6 +77,15 @@ Run `which deno` to confirm that you have deno installed. You should get the dir
 
 Run `deno run -A src/mod.ts` to start up the server.
 The `-A` flag allows all permissions and may be insecure. Review the permissions and enable individually if you have any security concerns.
+
+## Run development server with docker
+
+Ensure you have docker and docker-compose installed on your machine, then run
+
+```bash
+docker-compose build
+docker-compose up -d comments_api
+```
 
 ## Licence
 
